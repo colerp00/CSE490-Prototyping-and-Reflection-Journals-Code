@@ -28,7 +28,7 @@ const int MAX_COLOR_VALUE = 255;
 const int FADE_STEP = 1;
 
 // interval to wait between each loop
-const int INTERVAL_MS = 30;
+const int INTERVAL_MS = 20;
 
 int _mode;  // 1,2,3 for modes 1,2,3 respectively
 unsigned long _lastTimestamp;  // last time stamp recorded
@@ -58,7 +58,7 @@ void setup() {
   pinMode(INPUT_DIAL_PIN, INPUT);
   pinMode(INPUT_FSR_PIN, INPUT);
   pinMode(INPUT_MODE_BUTTON_PIN, INPUT);
-  _mode = 0;
+  _mode = 1;
   _lastTimestamp = 0;
   
   setColor(_rgbLedVals[RED], _rgbLedVals[GREEN], _rgbLedVals[BLUE]);
@@ -88,9 +88,9 @@ void loop() {
     } else if(_mode == 3) {
       mode3();
     }
+    // Save current timestamp
+    _lastTimestamp = curTimestamp;
   }
-  // Save current timestamp
-  _lastTimestamp = curTimestamp;
 }
 
 void mode1() {
@@ -194,7 +194,7 @@ void mode3() {
   // If the fsr is pressed enough and it wasn't pressed on the last loop
   if(fsrVal >= 233 && _lastRecordedPushState == 0 && recordedState != _lastRecordedPushState) {
     _curColorMode++;
-    if(_curColorMode > 6) {
+    if(_curColorMode > 7) {
       _curColorMode = 0;
     }
   }
@@ -222,16 +222,18 @@ void setColorCombo(int color) {
   if(color == 0) {         // Red
     setColor(255, 0, 0);
   } else if(color == 1) {  // Orange
-    setColor(205,50,0);
+    setColor(255, 69, 0);
   } else if(color == 2) {  // Yellow
-    setColor(128, 127, 0);
+    setColor(255, 255, 0);
   } else if(color == 3) {  // Green
     setColor(0, 255, 0);
   } else if(color == 4) {  // Blue
-    setColor(50, 50, 255);
-  } else if(color == 5) {  // Purple
-    setColor(127, 0, 128);
-  } else if(color == 6) {  // White
+    setColor(0, 0, 200);
+  } else if(color == 5) {  // Indigo
+    setColor(75, 0, 130);
+  } else if(color == 6) {  // Violet
+    setColor(255, 0, 255);
+  } else if(color == 7) {  // White
     setColor(255, 255, 255);
   }
 }
