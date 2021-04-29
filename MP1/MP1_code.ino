@@ -9,8 +9,8 @@ const int MAX_PHOTOCELL_VAL = 60;
 
 // For mode 2
 const int INPUT_DIAL_PIN = A1;
-const int MIN_DIAL_VAL = 0;
-const int MAX_DIAL_VAL = 1023;
+const int MIN_DIAL_VAL = 40;
+const int MAX_DIAL_VAL = 960;
 
 // For mode 3
 const int INPUT_FSR_PIN = A2;
@@ -78,7 +78,7 @@ void loop() {
       }
     }
     _lastRecordedButtonState = modeButtonVal;
-    Serial.println(_mode);
+    //Serial.println(_mode);
 
     // Call appropriate mode function
     if(_mode == 1) {
@@ -184,7 +184,7 @@ void mode3() {
   int fsrVal = analogRead(INPUT_FSR_PIN);
   //Serial.println(fsrVal);
 
-  // if the fsr has enough force applied to it, the recorded state 
+  // If the fsr has enough force applied to it, the recorded state 
   // is 1 (pressed), otherwise 0 (not pressed enough)
   int recordedState = 0;
   if(fsrVal >= 233) {
@@ -230,7 +230,7 @@ void setColorCombo(int color) {
   } else if(color == 4) {  // Blue
     setColor(0, 0, 200);
   } else if(color == 5) {  // Indigo
-    setColor(75, 0, 130);
+    setColor(75, 0, 170);
   } else if(color == 6) {  // Violet
     setColor(255, 0, 255);
   } else if(color == 7) {  // White
