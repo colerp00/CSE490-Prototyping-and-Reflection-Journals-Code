@@ -1,3 +1,10 @@
+/**
+ * This code uses ParallaxJoystick.hpp from MakeAbility Lab:
+ * 
+ * ParallaxJoystick.hpp
+ * https://github.com/makeabilitylab/arduino/blob/master/MakeabilityLab_Arduino_Library/src/ParallaxJoystick.hpp
+ */
+
 #include <Wire.h>
 #include <SPI.h>
 #include <Adafruit_GFX.h>
