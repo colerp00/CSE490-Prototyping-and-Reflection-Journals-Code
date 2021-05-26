@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Colorful Text</title>
+    <script src="https://cdn.jsdelivr.net/gh/makeabilitylab/p5js/_libraries/serial.js"></script>
+    <link rel="stylesheet" href="css/styles.css">
+  </head>
+
+<body>
+  <div id="main-content">
+    <button id="connect-button" onclick="onButtonConnectToSerialDevice()">
+      Connect via Serial Port
+    </button>
+    <div id="text-interface">
+      <h3>Enter text:</h3>
+      <input placeholder="Enter some text" name="input-text" />
+
+      <div id="interactive-controls" style="display:none">
+        <h1>Sliders' values:
+          <span id="red-slider-value">0</span>,
+          <span id="grn-slider-value">0</span>,
+          <span id="blu-slider-value">0</span>
+        </h1>
+        <input id="red-slider" type="range" min="0" max="255" value="0" step="5"
+          oninput="onSliderValueChanged(this, event, 'red-slider-value')" />
+        <input id="grn-slider" type="range" min="0" max="255" value="0" step="5"
+          oninput="onSliderValueChanged(this, event, 'grn-slider-value')" />
+        <input id="blu-slider" type="range" min="0" max="255" value="0" step="5"
+          oninput="onSliderValueChanged(this, event, 'blu-slider-value')" />
+      </div>
+
+      <h3>Display text:</h3>
+      <p id="output-text"></p>
+
+      <h3>Received from Arduino:</h3>
+      <p id="received-text"></p>
+    </div>
+  </div>
+
+  <script>
+    // Get current slider values and set it to their respective slider text output
+    let redSliderVal = document.getElementById('red-slider').value;
+    let grnSliderVal = document.getElementById('grn-slider').value;
+    let bluSliderVal = document.getElementById('blu-slider').value;
+    document.getElementById('red-slider-value').textContent = redSliderVal;
+    document.getElementById('grn-slider-value').textContent = grnSliderVal;
+    document.getElementById('blu-slider-value').textContent = bluSliderVal;
+
+    const inputText = document.querySelector('input');
+    const outputText = document.getElementById('output-text');
+    const rcvdText = document.getElementById('received-text');
+
+    inputText.addEventListener('input', updateOutputText);
+
+    // Setup Web Serial using serial.js
+    const serial = new Serial();
+    serial.on(SerialEvents.CONNECTION_OPENED, onSerialConnectionOpened);
+    serial.on(SerialEvents.CONNECTION_CLOSED, onSerialConnectionClosed);
+    serial.on(SerialEvents.DATA_RECEIVED, onSerialDataReceived);
+    serial.on(SerialEvents.ERROR_OCCURRED, onSerialErrorOccurred);
+
+
+     // Called automatically when the input textbox is updated
+    function updateOutputText(e) {
+      outputText.textContent = e.target.value;
+      serialWriteTextData(e.target.value);
+      updateTextColor();
+    }
+
+    function updateTextColor() {
+      // Get selected color vals
+      var redVal = document.getElementById("red-slider").value;
+      var grnVal = document.getElementById("grn-slider").value;
+      var bluVal = document.getElementById("blu-slider").value;
+
+      outputText.style = "color:rgb(" + redVal + "," + grnVal + "," + bluVal + ");";
+    }
+
+    // Send text data over serial
+    async function serialWriteTextData(textData) {
+      if (serial.isOpen()) {
+        console.log("Writing to serial: ", textData);
+        serial.writeLine(textData);
+      }
+    }
+  
+    async function onButtonConnectToSerialDevice() {
+      console.log("onButtonConnectToSerialDevice");
+      if (!serial.isOpen()) {
+        await serial.connectAndOpen();
+      }
+    }
+  
+    function onSerialErrorOccurred(eventSender, error) {
+      console.log("onSerialErrorOccurred", error);
+    }
+  
+    function onSerialConnectionOpened(eventSender) {
+      console.log("onSerialConnectionOpened", eventSender);
+      document.getElementById("connect-button").style.display = "none";
+      document.getElementById("text-interface").style.display = "block";
+      document.getElementById("interactive-controls").style.display = "block";
+    }
+  
+    function onSerialConnectionClosed(eventSender) {
+      console.log("onSerialConnectionClosed", eventSender);
+    }
+  
+    function onSerialDataReceived(eventSender, newData) {
+      console.log("onSerialDataReceived", newData);
+      rcvdText.textContent = newData;
+    }
+  
+    async function onConnectButtonClick() {
+      console.log("Connect button clicked!");
+    }
+
+    async function onSliderValueChanged(src, event, sliderValue) {
+      console.log("Writing to serial: " +
+        document.getElementById("red-slider").value + "," +
+        document.getElementById("blu-slider").value + "," +
+        document.getElementById("grn-slider").value);
+      writeInputToSerial();
+
+      // Update the slider value text
+      document.getElementById(sliderValue).textContent = src.value;
+
+      // Update the slider's shadow
+      var value = (src.value - src.min)/(src.max - src.min) * 100;
+      if(src == document.getElementById("red-slider")) {
+        src.style.background = 'linear-gradient(to right, #ff0000 0%, #ff0000 ' + value + '%, #fff ' + value + '%, #fff 100%)';
+      } else if(src == document.getElementById("grn-slider")) {
+        src.style.background = 'linear-gradient(to right, #00ff00 0%, #00ff00 ' + value + '%, #fff ' + value + '%, #fff 100%)';
+      } else if(src == document.getElementById("blu-slider")) {
+        src.style.background = 'linear-gradient(to right, #0000ff 0%, #0000ff ' + value + '%, #fff ' + value + '%, #fff 100%)';
+      }
+
+      // Update the color of the text in the text box
+      updateTextColor();
+    }
+
+    async function writeInputToSerial() {
+      serial.writeLine(document.getElementById("red-slider").value + "," +
+        document.getElementById("blu-slider").value + "," +
+        document.getElementById("grn-slider").value);
+    }
+  </script>
+</body>
+</html>

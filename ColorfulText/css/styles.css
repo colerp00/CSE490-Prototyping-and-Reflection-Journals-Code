@@ -1,0 +1,122 @@
+#main-content {
+  margin: auto;
+  width: 800px;
+  border: 3px solid rgb(216, 216, 216);
+  padding: 10px;
+}
+
+input{
+    min-width: 400px;
+}
+
+#text-interface{
+    display: none;
+}
+
+#red-slider {
+  background: linear-gradient(to right, #ff0000 0%, #ff0000 0%, #fff 0%, #fff 100%);
+  border: solid 1px rgb(255, 131, 131);
+  border-radius: 8px;
+  height: 9px;
+  width: 356px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+#grn-slider {
+  background: linear-gradient(to right, #00ff00 0%, #00ff00 0%, #fff 0%, #fff 100%);
+  border: solid 1px rgb(131, 255, 131);
+  border-radius: 8px;
+  height: 9px;
+  width: 356px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+#blu-slider {
+  background: linear-gradient(to right, #0000ff 0%, #0000ff 0%, #fff 0%, #fff 100%);
+  border: solid 1px rgb(131, 131, 255);
+  border-radius: 8px;
+  height: 9px;
+  width: 356px;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+/* Red Color Slider */
+/*@media screen and (-webkit-min-device-pixel-ratio:0) {
+  input[type='redRange'] {
+    overflow: hidden;
+    width: 80px;
+    -webkit-appearance: none;
+    background-color: #9a905d;
+  }
+  
+  input[type='redRange']::-webkit-slider-runnable-track {
+    height: 10px;
+    -webkit-appearance: none;
+    color: rgb(255, 0, 0);
+    margin-top: -1px;
+  }
+  
+  input[type='redRange']::-webkit-slider-thumb {
+    width: 10px;
+    -webkit-appearance: none;
+    height: 10px;
+    cursor: ew-resize;
+    background: #434343;
+    box-shadow: -80px 0 0 80px rgb(255, 131, 131);
+  }
+}*/
+
+/* Green Color Slider */
+/*@media screen and (-webkit-min-device-pixel-ratio:0) {
+  input[type='grnRange'] {
+    overflow: hidden;
+    width: 80px;
+    -webkit-appearance: none;
+    background-color: #9a905d;
+  }
+  
+  input[type='grnRange']::-webkit-slider-runnable-track {
+    height: 10px;
+    -webkit-appearance: none;
+    color: rgb(0, 255, 0);
+    margin-top: -1px;
+  }
+  
+  input[type='grnRange']::-webkit-slider-thumb {
+    width: 10px;
+    -webkit-appearance: none;
+    height: 10px;
+    cursor: ew-resize;
+    background: #434343;
+    box-shadow: -80px 0 0 80px rgb(131, 255, 131);
+  }
+}*/
+
+/* Blue Color Slider */
+/*@media screen and (-webkit-min-device-pixel-ratio:0) {
+  input[type='bluRange'] {
+    overflow: hidden;
+    width: 80px;
+    -webkit-appearance: none;
+    background-color: #9a905d;
+  }
+  
+  input[type='bluRange']::-webkit-slider-runnable-track {
+    height: 10px;
+    -webkit-appearance: none;
+    color: rgb(0, 0, 255);
+    margin-top: -1px;
+  }
+  
+  input[type='bluRange']::-webkit-slider-thumb {
+    width: 10px;
+    -webkit-appearance: none;
+    height: 10px;
+    cursor: ew-resize;
+    background: #434343;
+    box-shadow: -80px 0 0 80px rgb(131, 131, 255);
+  }
+}*/
