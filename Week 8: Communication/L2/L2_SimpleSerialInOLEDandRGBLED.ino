@@ -1,13 +1,3 @@
-/**
- * Receives a string off of the serial port and prints it out
- * on the OLED display.
- * 
- * By Jon E. Froehlich
- * @jonfroehlich
- * http://makeabilitylab.io
- * 
- */
-
 // #include <SPI.h> // Comment out when using i2c
 #include <Wire.h>
 #include <Adafruit_GFX.h>
